@@ -2,6 +2,8 @@ package com.example.clientcoreapi.controller;
 
 
 import com.example.clientcoreapi.model.ClientModel;
+import com.example.clientcoreapi.model.ClientRequest;
+import com.example.clientcoreapi.model.ClientResponse;
 import com.example.clientcoreapi.repository.ClientEntity;
 import com.example.clientcoreapi.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,31 +32,28 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createClient(@Valid @RequestBody ClientEntity clientEntity) {
-        clientService.createClient(clientEntity);
-        return new ResponseEntity<>("Successfully created", HttpStatus.OK);
+    public ClientResponse createClient(@Valid @RequestBody ClientRequest clientRequest) {
+
+        return clientService.createClient(clientRequest);
     }
 
     @GetMapping("/all")
-    public List<ClientEntity> getAllClients(){
+    public List<ClientResponse> getAllClients(){
         return clientService.getAllClients();
     }
 
     @GetMapping("/{clientID}")
-    public ClientEntity getClientById(@PathVariable String clientID) {
+    public ClientResponse getClientById(@PathVariable String clientID) {
         return clientService.getClientById(clientID);
     }
 
     @PutMapping("/{clientID}")
-    public ResponseEntity<String> updateClientById(@PathVariable String clientID,
-                                                 @Valid @RequestBody ClientEntity clientEntity) {
-        clientService.updateClientById(clientID, clientEntity);
-        return new ResponseEntity<>("Successfully updated", HttpStatus.OK);
+    public ClientResponse updateClientById(@Valid @RequestBody ClientRequest clientRequest) {
+        return clientService.updateClientById(clientRequest);
     }
 
     @DeleteMapping("/{clientID}")
-    public ResponseEntity<String> deleteClientById(@PathVariable String clientID) {
-        clientService.deleteClientById(clientID);
-        return new ResponseEntity<>("Successfully deleted", HttpStatus.OK);
+    public ClientResponse deleteClientById(@PathVariable String clientID) {
+        return clientService.deleteClientById(clientID);
     }
 }
